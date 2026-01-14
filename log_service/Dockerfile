@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 #Copy application files
 COPY . .
 
-EXPOSE 5001
+EXPOSE 5000
 
 #Run the app with uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5001"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
