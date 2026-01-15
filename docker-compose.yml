@@ -1,0 +1,57 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: log_service_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: log_service
+    networks:
+      - log-service-network
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  log_generator:
+    depends_on:
+      - db
+    image: log-generator
+    container_name: log_generator
+    ports:
+      - "5000:5000"
+    networks:
+      - log-service-network
+    volumes:
+      - pg-data:/app/pg-data
+
+  log_process:
+    depends_on:
+      - db
+    image: log-process
+    container_name: log-process
+    ports:
+      - "5001:5001"
+    networks:
+      - log-service-network
+    volumes:
+      - pg-data:/app/pg-data
+
+  stats_display:
+    depends_on:
+      - db
+    image: stats_display
+    container_name: stats-display
+    ports:
+      - "5002:5002"
+    networks:
+      - log-service-network
+    volumes:
+      - pg-data:/app/pg-data
+
+networks:
+  log-service-network:
+    driver: bridge
+
+volumes:
+  pg-data:
