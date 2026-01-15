@@ -14,16 +14,12 @@ services:
       - pg-data:/var/lib/postgresql/data
 
   log_generator:
-    depends_on:
-      - db
     image: log-generator
     container_name: log_generator
     ports:
       - "5000:5000"
     networks:
       - log-service-network
-    volumes:
-      - pg-data:/app/pg-data
 
   log_process:
     depends_on:
