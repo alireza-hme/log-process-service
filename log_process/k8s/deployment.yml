@@ -7,8 +7,8 @@ metadata:
 
 spec:
   replicas: 1
-  selector:
-    matchLabel:
+  selector
+    matchLabels:
       app: log-process
   template:
     metadata:
@@ -16,7 +16,7 @@ spec:
         app: log-process
     spec:
       - containers: log-process
-        image: alirezahme96/log-process
+        image: alirezahme96/log-process:latest
         ports:
           - containerPort: 5001
 

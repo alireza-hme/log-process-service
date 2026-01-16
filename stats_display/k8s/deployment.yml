@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+
+kind: deployment
+
+metadata:
+  name: stats-display-deployment
+
+spec:
+  replicas: 1
+  selectors:
+    matchLabels:
+      app: stats-display
+  template:
+    metadata:
+      labels:
+        app: stats-display
+    containers:
+      - name: stats-display
+        image: alirezahme96/stats-display:latest
+        ports:
+          - containerPort: 5002
