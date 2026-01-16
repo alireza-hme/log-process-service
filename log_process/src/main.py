@@ -17,7 +17,6 @@ DB_CONFIG = {
     "port": 5432
 }
 
-
 def insert_logs_into_db(logs: List[Dict]):
     try:
         db_connection = connect(**DB_CONFIG)

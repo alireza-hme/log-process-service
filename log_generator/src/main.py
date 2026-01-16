@@ -6,6 +6,7 @@ import time
 import random
 import json
 import faker
+import requests
 from datetime import datetime
 
 
@@ -36,7 +37,11 @@ def send_logs():
         with open(LOG_FILE_PATH, "r") as file:
             logs = [json.loads(line) for line in file]
 
-        print("Sent Logs:", logs)
+        # Send logs to log_process via REST API
+        response = requests.post("http://log_process:5001/logs", json=logs)
+        response.raise_for_status()
+
+        # Clear the file
         open(LOG_FILE_PATH, "w").close()
     except Exception as e:
         print("Error Sending Logs:",e)
