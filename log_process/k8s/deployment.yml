@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+
+kind: deployment
+
+metadata:
+  name: log-process-deployment
+
+spec:
+  replicas: 1
+  selector:
+    matchLabel:
+      app: log-process
+  template:
+    metadata:
+      labels:
+        app: log-process
+    spec:
+      - containers: log-process
+        image: alirezahme96/log-process
+        ports:
+          - containerPort: 5001
+

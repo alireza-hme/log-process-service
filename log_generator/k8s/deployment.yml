@@ -16,7 +16,7 @@ spec:
         app: log-generator
     spec:
       containers:
-        - name: log_generator
+        - name: log-generator
           image: alirezahme96/log-generator:latest
           ports:
             - containerPort: 5000

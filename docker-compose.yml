@@ -15,7 +15,7 @@ services:
 
   log_generator:
     image: log-generator
-    container_name: log_generator
+    container_name: log-generator
     ports:
       - "5000:5000"
     networks:
