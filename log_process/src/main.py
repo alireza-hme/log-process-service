@@ -1,6 +1,5 @@
 from fastapi import FastAPI, BackgroundTasks
 import asyncio
-import os
 import json
 import faker
 from datetime import datetime
@@ -10,7 +9,6 @@ from typing import List, Dict
 app = FastAPI()
 
 # Config
-LOG_FILE_PATH = "/app/logs/logs.json"
 DB_CONFIG = {
     "dbname": "log_service",
     "password": "postgres",
@@ -18,8 +16,6 @@ DB_CONFIG = {
     "user": "postgres",
     "port": 5432
 }
-
-os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
 
 
 def insert_logs_into_db(logs: List[Dict]):
