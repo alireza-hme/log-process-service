@@ -4,6 +4,7 @@ kind: Deployment
 
 metadata:
   name: log-generator-deployment
+  namespace: default
 
 spec:
   replicas: 1

@@ -1,13 +1,14 @@
 apiVersion: apps/v1
 
-kind: deployment
+kind: Deployment
 
 metadata:
   name: log-process-deployment
+  namespace: default
 
 spec:
   replicas: 1
-  selector
+  selector:
     matchLabels:
       app: log-process
   template:
@@ -19,4 +20,3 @@ spec:
         image: alirezahme96/log-process:latest
         ports:
           - containerPort: 5001
-

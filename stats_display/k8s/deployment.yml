@@ -1,9 +1,10 @@
 apiVersion: apps/v1
 
-kind: deployment
+kind: Deployment
 
 metadata:
   name: stats-display-deployment
+  namespace: default
 
 spec:
   replicas: 1
