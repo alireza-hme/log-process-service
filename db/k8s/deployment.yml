@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: db-deployment
+  namespace: default
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-service-db
+  template:
+    metadata:
+      labels:
+        app: log-service-db
+    spec:
+      containers:
+        - name: log-service-db
+          image: postgres:latest
+          porst:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: POSTGRES_DB
+              value: "log-service"

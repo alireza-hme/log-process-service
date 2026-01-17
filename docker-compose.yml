@@ -1,13 +1,13 @@
 services:
   db:
     image: postgres:latest
-    container_name: log_service_db
+    container_name: log-service-db
     ports:
       - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: log_service
+      POSTGRES_DB: log-service
     networks:
       - log-service-network
     volumes:
