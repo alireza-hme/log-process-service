@@ -2,3 +2,4 @@ fastapi
 uvicorn  
 faker
 psycopg2-binary
+asyncio
