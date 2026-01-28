@@ -1,10 +1,10 @@
-FROM python3.13
+FROM python:3.14
 
 #Set working directory
 WORKDIR /app
 
 #Intall dependencies
-COPY requirements.tx .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 #Copy application files
