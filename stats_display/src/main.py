@@ -1,5 +1,7 @@
+from fastapi import FastAPI
 import psycopg2
-from datetime import datetime
+
+app = FastAPI()
 
 DB_CONFIG = {
     "dbname": "log_service",
@@ -26,7 +28,7 @@ def display_stats():
         }
 
     except Exception as e:
-        print("Error fetching logs:", e)
+        print("Error fetching logs:", str(e))
 
     finally:
         if 'db_connection' in locals():
