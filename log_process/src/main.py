@@ -6,9 +6,9 @@ app = FastAPI()
 
 # Config
 DB_CONFIG = {
-    "dbname": "log_service",
+    "dbname": "log-service",
     "password": "postgres",
-    "host": "localhost",
+    "host": "log-service-db",
     "user": "postgres",
     "port": 5432
 }

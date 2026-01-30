@@ -4,10 +4,10 @@ import psycopg2
 app = FastAPI()
 
 DB_CONFIG = {
-    "dbname": "log_service",
+    "dbname": "log-service",
     "user": "postgres",
     "password": "postgres",
-    "host": "localhost",
+    "host": "log-service-db",
     "port": 5432
 }
 
