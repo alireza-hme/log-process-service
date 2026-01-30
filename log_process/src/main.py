@@ -1,8 +1,4 @@
-from fastapi import FastAPI, BackgroundTasks
-import asyncio
-import json
-import faker
-from datetime import datetime
+from fastapi import FastAPI
 from psycopg2 import connect, OperationalError
 from typing import List, Dict
 
@@ -17,7 +13,7 @@ DB_CONFIG = {
     "port": 5432
 }
 
-def insert_logs_into_db(logs: List[Dict]):
+def insert_logs(logs: List[Dict]):
     try:
         db_connection = connect(**DB_CONFIG)
         cursor = db_connection.cursor()
@@ -25,6 +21,7 @@ def insert_logs_into_db(logs: List[Dict]):
             INSERT INTO logs(timestamp, ip, user_agent, status, message) 
                        VALUES(%s, %s, %s, %s, %s)
             """, [(log["timestamp"], log["ip"], log["user_agent"], log["status"], log["message"]) for log in logs])
+        
         db_connection.commit()
         cursor.close()
         db_connection.close()
@@ -33,5 +30,5 @@ def insert_logs_into_db(logs: List[Dict]):
 
 @app.post("/logs")
 async def receive_logs(logs: List[Dict]):
-    insert_logs_into_db(logs)
+    insert_logs(logs)
     return {"message": "Logs received"}
