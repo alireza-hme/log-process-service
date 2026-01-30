@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+
+kind: Job
+
+metadata:
+  name: db-init
+  namespace: default
+
+spec:
+  template:
+    spec:
+      containers:
+        - name: db-init
+          image: postgres:latest
+          env:
+            - name: PGPASSWORD
+              value: "postgres"
+          command: ["sh", "-c"]
+          args:
+            - |
+              psql -h log-service-db -U postgres -d log-service <<EOS
+              CREATE TABLE IF NOT EXISTS logs (
+                timestamp TIMESTAMP,
+                ip TEXT,
+                user_agent TEXT,
+                status INT,
+                message TEXT
+              );
+              EOS
+      restartPolicy: OnFailure

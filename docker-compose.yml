@@ -11,7 +11,13 @@ services:
     networks:
       - log-service-network
     volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - pg-data:/var/lib/postgresql/18/main
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d log-service"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   log_generator:
     build:
@@ -26,7 +32,8 @@ services:
 
   log_process:
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     build:
       context: ./log_process
       dockerfile: Docker/Dockerfile
@@ -41,7 +48,8 @@ services:
 
   stats_display:
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     build:
       context: ./stats_display
       dockerfile: Docker/Dockerfile
