@@ -15,6 +15,21 @@ def display_stats():
     try:
         db_connection = psycopg2.connect(**DB_CONFIG)
         cursor = db_connection.cursor()
+
+        # Fetch logs to include in the response
+        cursor.execute("SELECT timestamp, ip, user_agent, status, message FROM logs")
+        rows = cursor.fetchall()
+
+        logs_info = [
+            {
+                "timestamp": row[0],
+                "ip": row[1],
+                "user_agent": row[2],
+                "status": row[3],
+                "message": row[4]
+            }
+            for row in rows
+        ]
         
         # Count logs by status code
         cursor.execute("SELECT status, COUNT(*) FROM logs GROUP BY status")
@@ -26,7 +41,8 @@ def display_stats():
         cursor.close()
         return {
             "total_logs": len(rows),
-            "status_counts": status_counts
+            "status_counts": status_counts,
+            "logs_info": logs_info
         }
 
     except Exception as e:
