@@ -15,16 +15,18 @@ def display_stats():
     try:
         db_connection = psycopg2.connect(**DB_CONFIG)
         cursor = db_connection.cursor()
-        cursor.execute("SELECT * FROM logs")
+        
+        # Count logs by status code
+        cursor.execute("SELECT status, COUNT(*) FROM logs GROUP BY status")
         rows = cursor.fetchall()
 
-        cursor.execute("SELECT COUNT(*) FROM logs")
-        total = cursor.fetchone()[0]
+        # Create a dictionary with status counts
+        status_counts = {str(row[0]): row[1] for row in rows}
 
         cursor.close()
         return {
-            "total_logs": total,
-            "status_counts": {str(r[0]): r[1] for r in rows}
+            "total_logs": len(rows),
+            "status_counts": status_counts
         }
 
     except Exception as e:
@@ -33,3 +35,7 @@ def display_stats():
     finally:
         if 'db_connection' in locals():
             db_connection.close()
+            
+@app.get("/stats_display")
+async def get_stats():
+    return display_stats()
