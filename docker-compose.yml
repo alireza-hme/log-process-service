@@ -44,7 +44,7 @@ services:
     networks:
       - log-service-network
     volumes:
-      - pg-data:/app/pg-data
+      - pg-data:/var/lib/postgresql/18/main
 
   stats_display:
     depends_on:
@@ -60,7 +60,7 @@ services:
     networks:
       - log-service-network
     volumes:
-      - pg-data:/app/pg-data
+      - pg-data:/var/lib/postgresql/18/main
 
 networks:
   log-service-network:
