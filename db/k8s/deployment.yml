@@ -29,8 +29,9 @@ spec:
             - name: POSTGRES_DB
               value: "log-service"
           volumeMounts:
-            - name: postgres-data
-              mountPath: /var/lib/postgresql/data
+            - name: pg-data
+              mountPath: /var/lib/postgresql/18/main
       volumes:
-        - name: postgres-data
-          emptyDir: {}
+        - name: pg-data
+          persistentVolumeClaim:
+            claimName: pg-pvc
