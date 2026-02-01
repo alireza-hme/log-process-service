@@ -53,7 +53,7 @@ services:
     build:
       context: ./stats_display
       dockerfile: Docker/Dockerfile
-    image: stats_display
+    image: stats-display
     container_name: stats-display
     ports:
       - "5002:5002"
