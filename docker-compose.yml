@@ -23,7 +23,7 @@ services:
     build:
       context: ./log_generator
       dockerfile: Docker/Dockerfile
-    image: log-generator
+    image: alirezahme96/log-generator
     container_name: log-generator
     ports:
       - "5000:5000"
@@ -37,7 +37,7 @@ services:
     build:
       context: ./log_process
       dockerfile: Docker/Dockerfile
-    image: log-process
+    image: alirezahme96/log-process
     container_name: log-process
     ports:
       - "5001:5001"
@@ -53,7 +53,7 @@ services:
     build:
       context: ./stats_display
       dockerfile: Docker/Dockerfile
-    image: stats-display
+    image: alirezahme96/stats-display
     container_name: stats-display
     ports:
       - "5002:5002"
