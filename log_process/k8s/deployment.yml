@@ -16,7 +16,8 @@ spec:
       labels:
         app: log-process
     spec:
-      - containers: log-process
-        image: alirezahme96/log-process:latest
-        ports:
-          - containerPort: 5001
+      containers:
+        - name: log-process
+          image: alirezahme96/log-process:latest
+          ports:
+            - containerPort: 5001
