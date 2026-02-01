@@ -1,13 +1,13 @@
 apiVersion: v1
 
-kind: service
+kind: Service
 
 metadata:
   name: stats-display
   namespace: default
 
 spec:
-  slector:
+  selector:
     app: stats-display
   ports:
     - protocol: TCP

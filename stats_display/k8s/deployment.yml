@@ -8,15 +8,16 @@ metadata:
 
 spec:
   replicas: 1
-  selectors:
+  selector:
     matchLabels:
       app: stats-display
   template:
     metadata:
       labels:
         app: stats-display
-    containers:
-      - name: stats-display
-        image: alirezahme96/stats-display:latest
-        ports:
-          - containerPort: 5002
+    spec:
+      containers:
+        - name: stats-display
+          image: alirezahme96/stats-display:latest
+          ports:
+            - containerPort: 5002
