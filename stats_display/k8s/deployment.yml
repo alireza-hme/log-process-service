@@ -19,5 +19,6 @@ spec:
       containers:
         - name: stats-display
           image: alirezahme96/stats-display:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5002

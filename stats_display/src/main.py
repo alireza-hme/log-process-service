@@ -40,18 +40,18 @@ def display_stats():
 
         cursor.close()
         return {
-            "total_logs": len(rows),
+            "total_logs": len(logs_info),  
             "status_counts": status_counts,
             "logs_info": logs_info
         }
 
     except Exception as e:
-        print("Error fetching logs:", str(e))
+        return {"error": str(e)}
 
     finally:
         if 'db_connection' in locals():
             db_connection.close()
             
-@app.get("/stats_display")
+@app.get("/stats-display")
 async def get_stats():
     return display_stats()

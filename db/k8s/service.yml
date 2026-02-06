@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 
 metadata:
-  name: db-service
+  name: log-service-db
   namespace: default
 
 spec:
