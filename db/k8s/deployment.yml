@@ -30,7 +30,7 @@ spec:
               value: "log-service"
           volumeMounts:
             - name: pg-data
-              mountPath: /var/lib/postgresql/18/main
+              mountPath: /var/lib/postgresql/18/docker
       volumes:
         - name: pg-data
           persistentVolumeClaim:

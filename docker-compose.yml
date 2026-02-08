@@ -12,7 +12,7 @@ services:
       - log-service-network
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - pg-data:/var/lib/postgresql/18/main
+      - pg-data:/var/lib/postgresql/18/docker
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d log-service"]
       interval: 5s
@@ -44,7 +44,7 @@ services:
     networks:
       - log-service-network
     volumes:
-      - pg-data:/var/lib/postgresql/18/main
+      - pg-data:/var/lib/postgresql/18/docker
 
   stats_display:
     depends_on:
@@ -60,7 +60,7 @@ services:
     networks:
       - log-service-network
     volumes:
-      - pg-data:/var/lib/postgresql/18/main
+      - pg-data:/var/lib/postgresql/18/docker
 
 networks:
   log-service-network:
