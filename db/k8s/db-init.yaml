@@ -1,11 +1,8 @@
 apiVersion: batch/v1
-
 kind: Job
-
 metadata:
   name: db-init
   namespace: default
-
 spec:
   template:
     spec:
@@ -24,7 +21,8 @@ spec:
                 ip TEXT,
                 user_agent TEXT,
                 status INT,
-                message TEXT
+                message TEXT,
+                response_time INT
               );
               EOS
       restartPolicy: OnFailure

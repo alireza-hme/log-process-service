@@ -1,59 +1,50 @@
 from fastapi import FastAPI
 import asyncio
-import os
-import json
 import random
 import faker
 from datetime import datetime
 import httpx
 
 app = FastAPI()
-
-LOG_FILE_PATH = "/app/logs/logs.json"
-os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
-
 fake = faker.Faker()
 
-def generate_logs(count=20):
+client: httpx.AsyncClient | None = None
+
+async def generate_and_send():
     logs = []
-    for _ in range(count):
+    for _ in range(20):
         logs.append({
             "timestamp": datetime.now().isoformat(),
             "ip": fake.ipv4(),
             "user_agent": fake.user_agent(),
             "status": random.choice([200, 404, 500]),
-            "message": fake.sentence()
+            "message": fake.sentence(),
+            "response_time": random.randint(50, 2000),
         })
 
-    with open(LOG_FILE_PATH, "a") as f:
-        for log in logs:
-            f.write(json.dumps(log) + "\n")
-
-async def send_logs():
-    if not os.path.exists(LOG_FILE_PATH):
-        return
-
     try:
-        with open(LOG_FILE_PATH, "r") as f:
-            logs = [json.loads(line) for line in f if line.strip()]
-
-        if not logs:
-            return
-
-        async with httpx.AsyncClient() as client:
-            await client.post("http://log_process:5001/logs", json=logs)
-
-        open(LOG_FILE_PATH, "w").close()
-
+        resp = await client.post(
+            "http://log-process-service:5001/logs",
+            json=logs,
+            headers={"Connection": "close"}  # Force spread traffic
+        )
+        resp.raise_for_status()
+        print("Sent 20 logs")
     except Exception as e:
-        print("Send error:", e)
+        print(f"Error: {e}")
 
 async def scheduler():
     while True:
-        generate_logs()
-        await send_logs()
-        await asyncio.sleep(300)  # 5 minutes
+        await generate_and_send()
+        await asyncio.sleep(1)
 
 @app.on_event("startup")
 async def startup():
+    global client
+    client = httpx.AsyncClient(timeout=httpx.Timeout(300.0))
     asyncio.create_task(scheduler())
+
+@app.on_event("shutdown")
+async def shutdown():
+    if client:
+        await client.aclose()

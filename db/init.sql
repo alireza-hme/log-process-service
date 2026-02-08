@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS logs (
     ip TEXT,
     user_agent TEXT,
     status INT,
-    message TEXT
+    message TEXT,
+    response_time INT
 );

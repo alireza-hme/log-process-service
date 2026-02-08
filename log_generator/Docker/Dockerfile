@@ -13,4 +13,4 @@ COPY . .
 EXPOSE 5000
 
 #Run the app with uvicorn
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "5000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "5000", "--workers", "1"]
