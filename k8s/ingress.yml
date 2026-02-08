@@ -6,10 +6,10 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: log-process-service.local
+    - host: log-process-service.test
       http:
         paths:
-          - path: /
+          - path: /stats-display
             pathType: Prefix
             backend:
               service:
